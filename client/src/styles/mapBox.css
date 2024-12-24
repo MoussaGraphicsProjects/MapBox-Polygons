@@ -1,0 +1,60 @@
+@media (forced-colors: active) {
+    /* High contrast styles */
+    .map-container {
+        background-color: Window;
+        color: WindowText;
+    }
+}
+
+.toolbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    background-color: #f0f0f0; 
+    padding: 10px;
+    box-sizing: border-box; 
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .toolbar button{
+    padding: 0.9rem;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+  }
+  
+  .toolbar button:hover{
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Link styling */
+  .toolbar a {
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .toolbar a:hover{
+    text-decoration: underline;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 480px) {
+    .toolbar {
+      padding: 2rem;
+    }
+  
+    .toolbar h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
