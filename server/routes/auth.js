@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const poolPromise = require('../db/config');
+const authenticateToken = require('../middleware/auth');
 
 require('dotenv').config();
 
@@ -60,4 +61,19 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/get', authenticateToken, async (req, res, next) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .query(
+        `SELECT Users.ID, Users.UserName
+         FROM Users
+         ORDER BY UserName`
+      );
+    const users = result.recordset;
+    res.status(200).send(users);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

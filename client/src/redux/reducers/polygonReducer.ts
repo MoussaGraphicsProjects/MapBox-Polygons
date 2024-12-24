@@ -10,7 +10,7 @@ const initialState = {
       case 'FETCH_POLYGONS_FAIL':
         return { ...state, error: action.payload };
       case 'ADD_POLYGON_SUCCESS':
-        return { ...state, polygons: [...state.polygons, action.payload] };
+        return { ...state, polygons: [...state.polygons, action.payload[0]] };
       case 'ADD_POLYGON_FAIL':
         return { ...state, error: action.payload };
       default:
