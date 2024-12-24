@@ -1,5 +1,5 @@
 {
-  "name": "vois-map",
+  "name": "mapbox-polygons-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: process.env.MAPBOX_POLYGONS_SERVER_API_URL,
+    apiUrl: `http://mapbox-polygons-server:3000/api` ,
 };
 
 export default config;

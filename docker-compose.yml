@@ -1,18 +1,16 @@
 services:
   mapbox-polygons-client:
     build: 
-      context: ./client  # Path to your React application
+      context: ./mapbox-polygons-client  # Path to your React application
       dockerfile: Dockerfile
     ports:
       - "3000:3000"  # Expose React app on port 3000
     depends_on:
       - mapbox-polygons-server 
-    environment:
-      - MAPBOX_POLYGONS_SERVER_API_URL=http://mapbox-polygons-server:3000/api 
 
   mapbox-polygons-server:
     build: 
-      context: ./server
+      context: ./mapbox-polygons-server
       dockerfile: Dockerfile
     depends_on:
       - mssql
