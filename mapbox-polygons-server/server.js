@@ -12,9 +12,9 @@ const createDatabaseAndTable = require('./middleware/dbCreator');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/auth', authRoutes);
-app.use('/polygons', polygonRoutes);
-app.use('/mapbox-style', mapBoxRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/polygons', polygonRoutes);
+app.use('/api/mapbox-style', mapBoxRoutes);
 app.use(errorHandler);
 
 createDatabaseAndTable();

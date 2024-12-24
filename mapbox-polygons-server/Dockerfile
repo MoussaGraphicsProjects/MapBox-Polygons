@@ -1,4 +1,4 @@
-FROM node:18-alpine  # Use a Node.js base image
+FROM node:18-alpine AS build-stage
 
 WORKDIR /app
 
