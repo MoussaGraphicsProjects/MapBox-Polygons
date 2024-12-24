@@ -1,0 +1,33 @@
+version: "3.9"  # Use a recent version for compatibility
+
+services:
+  react:
+    build: 
+      context: ./client  # Path to your React application
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"  # Expose React app on port 3000
+    depends_on:
+      - node 
+
+  node:
+    build: 
+      context: ./server  # Path to your Node.js application
+      dockerfile: Dockerfile
+    depends_on:
+      - mssql
+    environment:
+      - DB_HOST=mssql  # Assuming MSSQL service is named "mssql"
+      - # Add other environment variables as needed
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:latest  # Use the latest MSSQL image
+    environment:
+      # Set MSSQL environment variables (refer to MSSQL documentation)
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngPass!2025 
+    ports:
+      - "1433:1433"  # Expose MSSQL on port 1433
+
+volumes:
+  mssql-data:  # Optional: Persist MSSQL data

@@ -1,4 +1,3 @@
-const fs = require('fs');
 const sql = require('mssql');
 
 const config = {
@@ -12,36 +11,50 @@ const config = {
   },
 };
 
-const checkAndCreateDatabase = async ()=> {
+const createDatabaseAndTable =async function () {
   try {
-    console.log('Connecting to SQL Server...');
-    const pool = await sql.connect(config);
+    // Connect to the SQL Server
+    let pool = await sql.connect(config);
 
-    console.log('Checking if the database exists...');
-    const dbName = 'MapBox2'; 
-    const checkQuery = `
-      IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '${dbName}')
+    // SQL commands to create database and table
+    const createDbQuery = `
+      IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Mapbox')
       BEGIN
-        PRINT('Database does not exist. Creating database...');
+          CREATE DATABASE Mapbox;
       END
     `;
+    const createTableQuery = `
+      USE Mapbox;
+      CREATE TABLE [dbo].[Polygons](
+        [ID] [uniqueidentifier] NOT NULL,
+        [Title] [nvarchar](100) NULL
+      );
+      CREATE TABLE [dbo].[Users](
+        [ID] [uniqueidentifier] NULL,
+        [UserName] [nvarchar](100) NULL,
+        [Password] [nvarchar](max) NULL
+      );
+      CREATE TABLE [dbo].[Vertices](
+        [ID] [uniqueidentifier] NOT NULL,
+        [PolygonID] [uniqueidentifier] NOT NULL,
+        [Longitude] [decimal](18, 6) NOT NULL,
+        [Latitude] [decimal](18, 6) NOT NULL,
+        [VertexIndex] [int] NOT NULL
+      );
+    `;
 
-    const result = await pool.request().query(checkQuery);
-    if (result.rowsAffected.length == 0) {
-      console.log('Database does not exist. Executing SQL script...');
-      const sqlScript = fs.readFileSync('./db/dbcreation.sql', 'utf-8');
-      await pool.request().batch(sqlScript);
-      console.log('Database created successfully!');
-    } else {
-      console.log('Database already exists.');
-    }
+    // Execute the SQL queries
+    await pool.request().query(createDbQuery);
+    console.log("Database 'Mapbox' created successfully!");
 
-    await pool.close();
-  } catch (error) {
-    console.error('Error creating database:', error);
-  } finally {
-    sql.close();
+    await pool.request().query(createTableQuery);
+    console.log("Tables  created successfully inside 'Mapbox'!");
+
+    // Close the connection
+    pool.close();
+  } catch (err) {
+    console.error("An error occurred:", err.message);
   }
 }
 
-module.exports = checkAndCreateDatabase;
+module.exports = createDatabaseAndTable;

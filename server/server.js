@@ -5,8 +5,9 @@ const polygonRoutes = require('./routes/polygons');
 const mapBoxRoutes = require('./routes/mapBox');
 const errorHandler = require('./middleware/errorHandler');
 const cors = require("cors");
-
 require('dotenv').config();
+
+const createDatabaseAndTable = require('./middleware/dbCreator');
 
 const app = express();
 app.use(cors());
@@ -15,6 +16,8 @@ app.use('/auth', authRoutes);
 app.use('/polygons', polygonRoutes);
 app.use('/mapbox-style', mapBoxRoutes);
 app.use(errorHandler);
+
+createDatabaseAndTable();
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
