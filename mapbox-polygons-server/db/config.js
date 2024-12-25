@@ -1,10 +1,12 @@
-const sql = require('mssql');
-require('dotenv').config();
+import sql from 'mssql';
+import createDatabaseAndTable from '../middleware/dbCreator.js';
+import { config } from 'dotenv';
+config();
 
-const config = {
+const _config = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
+  server: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   options: {
     encrypt: true, 
@@ -12,7 +14,9 @@ const config = {
   },
 };
 
-const poolPromise = new sql.ConnectionPool(config)
+await createDatabaseAndTable();
+
+const poolPromise = new sql.ConnectionPool(_config)
   .connect()
   .then(pool => {
     console.log('Connected to SQL Server');
@@ -20,4 +24,4 @@ const poolPromise = new sql.ConnectionPool(config)
   })
   .catch(err => console.error('Database connection failed: ', err));
 
-module.exports = poolPromise;
+export default poolPromise;

@@ -1,11 +1,9 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
-const poolPromise = require('../db/config');
-const authenticateToken = require('../middleware/auth');
-
-require('dotenv').config();
+import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import poolPromise from '../db/config.js';
+import authenticateToken from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -16,7 +14,7 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const pool = await poolPromise;
 
-    const result = await pool.request()
+    await pool.request()
       .input('id', uuidv4())
       .input('username', username)
       .input('password', hashedPassword)
@@ -76,4 +74,5 @@ router.get('/get', authenticateToken, async (req, res, next) => {
     next(error);
   }
 });
-module.exports = router;
+
+export default router;

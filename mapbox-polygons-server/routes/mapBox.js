@@ -1,6 +1,6 @@
-const express = require('express');
-const request = require('request');
-const authenticateToken = require('../middleware/auth');
+import express from 'express';
+import request  from 'request';
+import authenticateToken from '../middleware/auth.js';
 const router = express.Router();
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoibW91c3NhZ3JhcGhpY3MiLCJhIjoiY200eTl3NTY3MHhrNjJtczhuM2RpeTVnYiJ9._3QUVKdPVLGezG3pAVtgzA';
@@ -34,4 +34,4 @@ router.get('/getMap', authenticateToken, (req, res) => {
     );
 });
 
-module.exports = router;
+export default router;

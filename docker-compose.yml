@@ -1,10 +1,10 @@
 services:
   mapbox-polygons-client:
     build: 
-      context: ./mapbox-polygons-client  # Path to your React application
+      context: ./mapbox-polygons-client 
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Expose React app on port 3000
+      - "3001:3001" 
     depends_on:
       - mapbox-polygons-server 
 
@@ -12,26 +12,26 @@ services:
     build: 
       context: ./mapbox-polygons-server
       dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
     depends_on:
-      - mssql
+      - mapbox-polygons-mssql
     environment:
-      - DB_HOST=mssql
+      - DB_HOST=mapbox-polygons-mssql
       - DB_USER=sa
       - DB_PASSWORD=Str0ngPass!2025
-      - DB_SERVER=localhost
       - DB_DATABASE=Mapbox
       - JWT_SECRET=vois_map_box_secret_key
       - JWT_EXPIRES_IN=12h
       - PORT=3000
 
-  mssql:
-    image: mcr.microsoft.com/mssql/server:latest  # Use the latest MSSQL image
+  mapbox-polygons-mssql:
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
-      # Set MSSQL environment variables (refer to MSSQL documentation)
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Str0ngPass!2025 
     ports:
-      - "1433:1433"  # Expose MSSQL on port 1433
+      - "1437:1437"  
 
 volumes:
-  mssql-data:  # Optional: Persist MSSQL data
+  mssql-data: 

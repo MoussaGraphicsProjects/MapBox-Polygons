@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
@@ -11,11 +11,11 @@ const authenticateToken = (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, SECRET_KEY);
-    req.user = verified; // Attach decoded token data to `req.user`
+    req.user = verified; 
     next();
   } catch (error) {
     res.status(403).send({ message: 'Invalid or expired token' });
   }
 };
 
-module.exports = authenticateToken;
+export default  authenticateToken;

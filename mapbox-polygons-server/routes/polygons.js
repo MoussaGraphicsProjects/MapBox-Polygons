@@ -1,19 +1,19 @@
-const express = require('express');
-const { v4: uuidv4 } = require('uuid'); // To manually generate GUIDs if needed
-const poolPromise = require('../db/config');
-const authenticateToken = require('../middleware/auth');
+import express  from 'express';
+import { v4 as uuidv4 } from  'uuid'; // To manually generate GUIDs if needed
+import poolPromise from '../db/config.js';
+import authenticateToken from  '../middleware/auth.js';
 
 const router = express.Router();
 
-const { body, param, validationResult } = require('express-validator');
+import { check, validationResult }  from 'express-validator';
 
 router.post(
   '/post',
   authenticateToken,
   [
-    body('id').notEmpty().withMessage('ID is required'),
-    body('title').notEmpty().withMessage('Title is required'),
-    body('coordinates').notEmpty().withMessage('PolyData is required'),
+    check('id').notEmpty().withMessage('ID is required'),
+    check('title').notEmpty().withMessage('Title is required'),
+    check('coordinates').notEmpty().withMessage('PolyData is required'),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -97,4 +97,4 @@ router.get('/get', authenticateToken, async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;
