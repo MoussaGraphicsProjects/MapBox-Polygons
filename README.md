@@ -15,6 +15,8 @@ Docker compose shall deploy images for MSSQL, Server (Node.js and required modul
 
 Once the deployment finishes successfully you could be able to open the React client using: http://localhost:5173/.
 
+Client depends on Server depends on MSSQL so start order should be MSSQL->Node.js->React
+
 A login screen will appear. please click Register and create a new user login.
 
 Login with the created user you will access the map page.
