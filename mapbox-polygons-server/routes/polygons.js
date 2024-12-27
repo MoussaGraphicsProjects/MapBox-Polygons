@@ -36,7 +36,7 @@ router.post(
       const polyData = coordinates.map((vertex, index) => {
         return {
           id: uuidv4(),
-          polygonID: id, // Assuming id is the PolygonID
+          polygonID: id, 
           vertexIndex: index,
           longitude: vertex[0],
           latitude: vertex[1],

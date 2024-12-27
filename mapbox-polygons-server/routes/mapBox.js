@@ -26,10 +26,10 @@ router.get('/getMap', authenticateToken, (req, res) => {
 
             if (response.statusCode !== 200) {
                 console.error(`Mapbox returned status code: ${response.statusCode}`);
-                return res.status(response.statusCode).send(body); // Forward the Mapbox error
+                return res.status(response.statusCode).send(body); 
             }
 
-            res.send(body); // Send the Mapbox style data back to the client
+            res.send(body);
         }
     );
 });
