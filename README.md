@@ -13,9 +13,13 @@ Also modify client/src/config.ts apiUrl value with modified port.
 
 Docker compose shall deploy images for MSSQL, Server (Node.js and required modules) and Client (React, Node.js and required modules) then create running containers.
 
+The deployment is adjusted for development.
+
 Once the deployment finishes successfully you could be able to open the React client using: http://localhost:5173/.
 
-Client depends on Server depends on MSSQL so start order should be MSSQL->Node.js->React
+Client depends on Server depends on MSSQL so start order should be MSSQL->Node.js->React.
+
+Once the Node.js Express server starts and run server.js script it checks the MSSQL DB and create it if not exists.
 
 A login screen will appear. please click Register and create a new user login.
 
